@@ -15,7 +15,18 @@ def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
     ''
     """
     ciphertext = ""
-    # PUT YOUR CODE HERE
+    text = list(plaintext)
+    for n in text:
+        n = ord(n)
+        if ord('a') <= n <= ord('z') or ord('A') <= n <= ord('Z'):
+            if ord('z') - shift < n <= ord('z'):
+                n -= 26
+            elif ord('Z') - shift < n <= ord('Z'):
+                n -= 26
+            n += shift
+            ciphertext += chr(n)
+        else:
+            ciphertext += chr(n)
     return ciphertext
 
 
@@ -33,7 +44,18 @@ def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
     ''
     """
     plaintext = ""
-    # PUT YOUR CODE HERE
+    text = list(ciphertext)
+    for n in text:
+        n = ord(n)
+        if ord('a') <= n <= ord('z') or ord('A') <= n <= ord('Z'):
+            if ord('a') <= n < ord('a') + shift:
+                n += 26
+            elif ord('A') <= n < ord('A') + shift:
+                n += 26
+            n -= shift
+            plaintext += chr(n)
+        else:
+            plaintext += chr(n)
     return plaintext
 
 
@@ -42,5 +64,15 @@ def caesar_breaker_brute_force(ciphertext: str, dictionary: tp.Set[str]) -> int:
     Brute force breaking a Caesar cipher.
     """
     best_shift = 0
-    # PUT YOUR CODE HERE
+    text = list(ciphertext.lower())
+    for n in dictionary:
+        alph = list(n)
+        cip1 = ord(text[0]) - ord(alph[0])
+        cip2 = ord(text[1]) - ord(alph[1])
+        if cip1 < 0:
+            cip1 += 26
+        if cip2 < 0:
+            cip2 += 26
+        if cip1 == cip2:
+            best_shift = cip1
     return best_shift
