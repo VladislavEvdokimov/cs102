@@ -1,5 +1,5 @@
 from typing import Tuple, List, Set, Optional
-
+import random
 
 def read_sudoku(filename: str) -> List[List[str]]:
     """ Прочитать Судоку из указанного файла """
@@ -137,7 +137,20 @@ def solve(grid: List[List[str]]) -> Optional[List[List[str]]]:
 def check_solution(solution: List[List[str]]) -> bool:
     """ Если решение solution верно, то вернуть True, в противном случае False """
     # TODO: Add doctests with bad puzzles
-    pass
+    for f in range(len(solution)):
+        solved = set(get_row(solution, (f, 0)))
+        if solved != set("123456789"):
+            return False
+    for w in range(len(solution)):
+        solved = set(get_col(solution, (0, w)))
+        if solved != set("123456789"):
+            return False
+    for f in range(0, len(solution), 3):
+        for w in range(0, len(solution), 3):
+            solved = set(get_block(solution, (f, w)))
+            if solved != set("123456789"):
+                return False
+    return True
 
 
 def generate_sudoku(N: int) -> List[List[str]]:
@@ -162,8 +175,17 @@ def generate_sudoku(N: int) -> List[List[str]]:
     >>> check_solution(solution)
     True
     """
-    pass
+    grid = solve([["."] * 9 for _ in range(9)])
+    N = 81 - min(81, N)
+    while N:
+        row = random.randint(0, 8)
+        col = random.randint(0, 8)
+        if grid is not None:
+            if grid[row][col] != ".":
+                grid[row][col] = "."
+                N -= 1
 
+    return grid  # type: ignore
 
 if __name__ == '__main__':
     for fname in ['puzzle1.txt', 'puzzle2.txt', 'puzzle3.txt']:
