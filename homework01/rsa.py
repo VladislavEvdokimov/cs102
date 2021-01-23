@@ -5,7 +5,6 @@ import typing as tp
 def is_prime(n: int) -> bool:
     """
     Tests to see if a number is prime.
-
     >>> is_prime(2)
     True
     >>> is_prime(11)
@@ -19,7 +18,7 @@ def is_prime(n: int) -> bool:
         return False
     else:
         m = 0
-        for i in range(2, n):
+        for i in range(2,n):
             if n % i == 0:
                 m += 1
             elif m <= 0:
@@ -31,7 +30,6 @@ def is_prime(n: int) -> bool:
 def gcd(a: int, b: int) -> int:
     """
     Euclid's algorithm for determining the greatest common divisor.
-
     >>> gcd(12, 15)
     3
     >>> gcd(3, 7)
@@ -49,22 +47,21 @@ def multiplicative_inverse(e: int, phi: int) -> int:
     """
     Euclid's extended algorithm for finding the multiplicative
     inverse of two numbers.
-
     >>> multiplicative_inverse(7, 40)
     23
     """
-    m, x, t, y, a, b = 1, 0, 0, 1, e, phi
+    s, x, r, y, a, b = 1, 0, 0, 1, e, phi
     while a != 0 and b != 0:
         if a >= b:
             a -= b
-            m -= x
-            t -= y
+            s -= x
+            r -= y
         else:
             b -= a
-            x -= m
-            y -= t
+            x -= s
+            y -= r
     if a != 0:
-        sn = m
+        sn = s
         d = sn % phi
         return d
     else:
@@ -73,9 +70,7 @@ def multiplicative_inverse(e: int, phi: int) -> int:
         return d
 
 
-def generate_keypair(
-    p: int, q: int
-) -> tp.Tuple[tp.Tuple[int, int], tp.Tuple[int, int]]:
+def generate_keypair(p: int, q: int) -> tp.Tuple[tp.Tuple[int, int], tp.Tuple[int, int]]:
     if not (is_prime(p) and is_prime(q)):
         raise ValueError("Both numbers must be prime.")
     elif p == q:
