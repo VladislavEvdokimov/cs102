@@ -10,8 +10,12 @@ Grid = List[Cells]
 
 
 class GameOfLife:
-    
-    def __init__(self, size: Tuple[int, int], randomize: bool=True, max_generations: Optional[float]=float('inf')) -> None:
+    def __init__(
+        self,
+        size: Tuple[int, int],
+        randomize: bool=True,
+        max_generations: Optional[float]=float('inf')
+        ) -> None:
         # Размер клеточного поля
         self.rows, self.cols = size
         # Предыдущее поколение клеток
@@ -39,7 +43,7 @@ class GameOfLife:
                 if 0 <= row + w < self.rows and 0 <= col + h < self.cols and (w, h) != (0, 0):
                     neighbours.append(self.curr_generation[row + w][col + h])
         return neighbours
-   
+        
     def get_next_generation(self) -> Grid:
         next_gen = self.create_grid(False)
         for x in range(self.rows):

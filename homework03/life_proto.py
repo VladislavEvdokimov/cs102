@@ -35,18 +35,16 @@ class GameOfLife:
     def draw_lines(self) -> None:
         """ Отрисовать сетку """
         for x in range(0, self.width, self.cell_size):
-            pygame.draw.line(self.screen, pygame.Color('black'),
-                    (x, 0), (x, self.height))
+            pygame.draw.line(self.screen, pygame.Color("black"), (x, 0), (x, self.height))
         for y in range(0, self.height, self.cell_size):
-            pygame.draw.line(self.screen, pygame.Color('black'),
-                    (0, y), (self.width, y))
+            pygame.draw.line(self.screen, pygame.Color("black"), (0, y), (self.width, y))
 
     def run(self) -> None:
         """ Запустить игру """
         pygame.init()
         clock = pygame.time.Clock()
-        pygame.display.set_caption('Game of Life')
-        self.screen.fill(pygame.Color('white'))
+        pygame.display.set_caption("Game of Life")
+        self.screen.fill(pygame.Color("white"))
 
         # Создание списка клеток
         self.grid = self.create_grid(randomize=True)
@@ -67,7 +65,7 @@ class GameOfLife:
             clock.tick(self.speed)
         pygame.quit()
 
-    def create_grid(self, randomize: bool=False) -> Grid:
+    def create_grid(self, randomize: bool = False) -> Grid:
         """
         Создание списка клеток.
 
@@ -130,7 +128,7 @@ class GameOfLife:
         out : Cells
             Список соседних клеток.
         """
-        neighbours= []
+        neighbours = []
         for w in range(-1, 2):
             for h in range(-1, 2):
                 if w == 0 and h == 0:
@@ -155,9 +153,7 @@ class GameOfLife:
             for h in range(self.cell_width):
                 if (self.grid[w][h] == 0) and sum(self.get_neighbours((w, h))) == 3:
                     new_grid[w][h] = 1
-                elif (self.grid[w][h] == 1) and (
-                    1 < sum(self.get_neighbours((w, h))) < 4
-                ):
+                elif (self.grid[w][h] == 1) and (1 < sum(self.get_neighbours((w, h))) < 4):
                     new_grid[w][h] = 1
 
         return new_grid
