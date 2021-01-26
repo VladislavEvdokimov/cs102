@@ -11,10 +11,11 @@ def read_sudoku(filename: str) -> List[List[str]]:
 def display(grid: List[List[str]]) -> None:
     """Вывод Судоку """
     width = 2
-    line = "+".join(['-' * (width * 3)] * 3)
+    line = "+".join(["-" * (width * 3)] * 3)
     for row in range(9):
         print(
-            "".join(grid[row][col].center(width) + ("|" if str(col) in '25' else "") for col in range(9)
+            "".join(
+                grid[row][col].center(width) + ("|" if str(col) in '25' else "") for col in range(9)
             )
         )
         if str(row) in "25":
