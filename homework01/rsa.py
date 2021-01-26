@@ -39,7 +39,7 @@ def gcd(a: int, b: int) -> int:
         if a > b:
             a = a % b
         else:
-            b %= a
+            b= b % a
     return a + b
 
 
