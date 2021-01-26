@@ -17,16 +17,16 @@ def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
     ciphertext = ""
     text = list(plaintext)
     for n in text:
-        n = ord(n)
-        if ord("a") <= n <= ord("z") or ord("A") <= n <= ord("Z"):
-            if ord("z") - shift < n <= ord("z"):
-                n -= 26
-            elif ord("Z") - shift < n <= ord("Z"):
-                n -= 26
-            n += shift
-            ciphertext += chr(n)
+        h = ord(n)
+        if ord("a") <= h <= ord("z") or ord("A") <= h <= ord("Z"):
+            if ord("z") - shift < h <= ord("z"):
+                h -= 26
+            elif ord("Z") - shift < h <= ord("Z"):
+                h -= 26
+            h += shift
+            ciphertext += chr(h)
         else:
-            ciphertext += chr(n)
+            ciphertext += chr(h)
     return ciphertext
 
 
@@ -46,16 +46,16 @@ def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
     plaintext = ""
     text = list(ciphertext)
     for n in text:
-        n = ord(n)
-        if ord("a") <= n <= ord("z") or ord("A") <= n <= ord("Z"):
-            if ord("a") <= n < ord("a") + shift:
-                n += 26
-            elif ord("A") <= n < ord("A") + shift:
-                n += 26
-            n -= shift
-            plaintext += chr(n)
+        h = ord(n)
+        if ord("a") <= h <= ord("z") or ord("A") <= h <= ord("Z"):
+            if ord("a") <= h < ord("a") + shift:
+                h += 26
+            elif ord("A") <= h < ord("A") + shift:
+                h += 26
+            h -= shift
+            plaintext += chr(h)
         else:
-            plaintext += chr(n)
+            plaintext += chr(h)
     return plaintext
 
 

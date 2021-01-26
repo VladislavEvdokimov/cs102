@@ -23,8 +23,8 @@ def is_prime(n: int) -> bool:
                 m += 1
             elif m <= 0:
                 return True
-            else:
-                return False
+            
+        return False
 
 
 def gcd(a: int, b: int) -> int:
