@@ -15,7 +15,7 @@ def display(grid: List[List[str]]) -> None:
     for row in range(9):
         print(
             "".join(
-                grid[row][col].center(width) + ("|" if str(col) in '25' else "") for col in range(9)
+                grid[row][col].center(width) + ("|" if str(col) in "25" else "") for col in range(9)
             )
         )
         if str(row) in "25":
@@ -109,6 +109,7 @@ def find_possible_values(grid: List[List[str]], pos: Tuple[int, int]) -> Set[str
         - set(get_col(grid, pos))
         - set(get_block(grid, pos))
     )
+    
 
 def solve(grid: List[List[str]]) -> Optional[List[List[str]]]:
     """Решение пазла, заданного в grid """
