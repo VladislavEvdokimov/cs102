@@ -42,7 +42,6 @@ class GUI(UI):
                         ),
                     )
 
-
     def run(self) -> None:
         pygame.init()
         clock = pygame.time.Clock()

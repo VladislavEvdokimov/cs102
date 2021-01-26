@@ -15,7 +15,9 @@ Grid = List[Cells]
 
 class GameOfLife:
 
-    def __init__(self, width: int=640, height: int=480, cell_size: int=10, speed: int=10) -> None:
+    def __init__(
+        self, width: int=640, height: int=480, cell_size: int=10, speed: int=10
+    ) -> None:
         self.width = width
         self.height = height
         self.cell_size = cell_size
@@ -133,9 +135,7 @@ class GameOfLife:
             for h in range(-1, 2):
                 if w == 0 and h == 0:
                     continue
-                if 0 <= cell[0] + w < len(self.grid) and 0 <= cell[1] + h < len(
-                    self.grid[0]
-                ):
+                if 0 <= cell[0] + w < len(self.grid) and 0 <= cell[1] + h < len(self.grid[0]):
                     neighbours.append(self.grid[cell[0] + w][cell[1] + h])
         return neighbours
 
