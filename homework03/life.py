@@ -44,7 +44,6 @@ class GameOfLife:
                     neighbours.append(self.curr_generation[row + w][col + h])
         return neighbours
 
-
     def get_next_generation(self) -> Grid:
         next_gen = self.create_grid(False)
         for x in range(self.rows):
