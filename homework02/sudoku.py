@@ -1,5 +1,5 @@
 from typing import Tuple, List, Set, Optional
-
+import random
 
 def read_sudoku(filename: str) -> List[List[str]]:
     """ Прочитать Судоку из указанного файла """
@@ -72,6 +72,8 @@ def get_block(grid: List[List[str]], pos: Tuple[int, int]) -> List[str]:
     >>> get_block(grid, (8, 8))
     ['2', '8', '.', '.', '.', '5', '.', '7', '9']
     """
+    row = pos[0] - pos[0] % 3
+    col = pos[1] - pos[1] % 3
     return [(grid[row + f][col + w]) for f in range(3) for w in range(3)]
 
 
