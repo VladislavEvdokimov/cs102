@@ -1,6 +1,7 @@
 import pathlib
 import random
 import copy
+
 from typing import List, Optional, Tuple
 
 
@@ -28,39 +29,44 @@ class GameOfLife:
         self.generations = 1
 
     def create_grid(self, randomize: bool = False) -> Grid:
-        clist = [[0 for w in range(self.cols)] for h in range(self.rows)]
-        if randomize:
-            for w in range(self.rows):
-                for h in range(self.cols):
-                    clist[w][h] = random.randint(0, 1)
-        return clist
+
+        grid = []
+        if randomize == False:
+            grid = [[0 for w in range(self.cols)] for h in range(self.rows)]
+        else:
+            grid = [[random.randint(0, 1) for w in range(self.cols)] for h in range(self.rows)]
+        return grid
 
     def get_neighbours(self, cell: Cell) -> Cells:
+
         neighbours = []
         row, col = cell
-        for w in [-1, 0, 1]:
-            for h in [-1, 0, 1]:
-                if 0 <= row + w < self.rows and 0 <= col + h < self.cols and (w, h) != (0, 0):
-                    neighbours.append(self.curr_generation[row + w][col + h])
+        for h in range(max(0, row - 1), min(self.rows, row + 2)):
+            for w in range(max(0, col - 1), min(self.cols, col + 2)):
+                if (h, w) != cell:
+                    neighbours.append(self.curr_generation[h][w])
         return neighbours
 
     def get_next_generation(self) -> Grid:
-        next_gen = self.create_grid(False)
-        for x in range(self.rows):
-            for y in range(self.cols):
-                new_neighbours = self.get_neighbours((x, y)).count(1)
-                if (self.curr_generation[x][y] == 0) and (new_neighbours == 3):
-                    next_gen[x][y] = 1
-                elif (self.curr_generation[x][y] == 1) and (new_neighbours in [2, 3]):
-                    next_gen[x][y] = 1
 
-        return next_gen
+        copy_grid = self.create_grid(False)
+        for h in range(self.rows):
+            for w in range(self.cols):
+                if (self.curr_generation[h][w] == 0) and sum(self.get_neighbours((h, w))) == 3:
+                    copy_grid[h][w] = 1
+                elif (self.curr_generation[h][w] == 1) and (
+                    1 < sum(self.get_neighbours((h, w))) < 4
+                ):
+                    copy_grid[h][w] = 1
+
+        return copy_grid
 
     def step(self) -> None:
         """
         Выполнить один шаг игры.
         """
-        self.prev_generation = self.curr_generation
+
+        self.prev_generation = copy.deepcopy(self.curr_generation)
         self.curr_generation = self.get_next_generation()
         self.generations += 1
 
@@ -69,33 +75,44 @@ class GameOfLife:
         """
         Не превысило ли текущее число поколений максимально допустимое.
         """
-        return self.generations == self.max_generations
+        if self.generations == self.max_generations:
+            return True
+        else:
+            return False
 
     @property
     def is_changing(self) -> bool:
         """
         Изменилось ли состояние клеток с предыдущего шага.
         """
-        return self.curr_generation != self.prev_generation
+
+        if self.prev_generation != self.curr_generation:
+            return True
+        else:
+            return False
 
     @staticmethod
     def from_file(filename: pathlib.Path) -> "GameOfLife":
         """
         Прочитать состояние клеток из указанного файла.
         """
-        file = open(filename, "r")
-        file_grid = [[int(w) for col in zet.strip()] for zet in file]
-        file.close()
 
-        game = GameOfLife((len(file_grid), len(file_grid[0])))
-        game.curr_generation = file_grid
+        doc = open(filename, "r")
+        doc_grid = [[int(col) for col in row.strip()] for row in doc]
+        doc.close()
+
+        game = GameOfLife((len(doc_grid), len(doc_grid[0])))
+        game.curr_generation = doc_grid
         return game
 
-    def save(filename: pathlib.Path) -> None:
+    def save(self, filename: pathlib.Path) -> None:
         """
         Сохранить текущее состояние клеток в указанный файл.
         """
-        with open(filename) as file:
-            for row in self.curr_generation:
-                file.write("".join([str(w) for w in row]))
-                file.write("\n")
+
+        doc = open(filename, "w")
+        for row in self.curr_generation:
+            for col in row:
+                doc.write(str(col))
+            doc.write("\n")
+        doc.close()
