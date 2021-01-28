@@ -76,35 +76,44 @@ def get_mutual(
     :param offset: Смещение, необходимое для выборки определенного подмножества общих друзей.
     :param progress: Callback для отображения прогресса.
     """
-    if target_uids:
-        x = []
-        y = int(len(target_uids) / 100) if int(len(target_uids) / 100) else 1
-        for t in progress(range(y)):
-            offset = 100 * t
-            r = session.get(
-                f"friends.getMutual?access_token={config.VK_CONFIG['access_token']}"
-                f"&source_uid={source_uid if source_uid else ''}"
-                f"&target_uids={','.join(map(str, target_uids)) if target_uids else ''}&order={order if order else ''}"
-                f"&count={count if count else ''}&offset={offset if offset else 0}"
-                f"&v={config.VK_CONFIG['version']}"
-            ).json()
-            try:
-                data = r["response"]
-            except KeyError:
-                raise APIError(r["error"])
-            x += [MutualFriends(**f) for f in data]  # type: ignore
-            if t % 3 == 2:
-                time.sleep(1)
-        return x
-    else:
-        r = session.get(
-            f"friends.getMutual?access_token={config.VK_CONFIG['access_token']}"
-            f"&source_uid={source_uid if source_uid else ''}&target_uid={target_uid if target_uid else ''}"
-            f"&order={order if order else ''}"
-            f"&count={count if count else ''}&offset={offset if offset else 0}"
-            f"&v={config.VK_CONFIG['version']}"
-        ).json()
-        try:
-            return r["response"]
-        except KeyError:
-            raise APIError(r["error"])
+    if target_uids is None:
+        params = {
+            "access_token": VK_CONFIG["access_token"],
+            "v": VK_CONFIG["version"],
+            "source_uid": source_uid if source_uid is not None else "",
+            "target_uid": target_uid,
+            "order": order,
+        }
+        response = session.get(f"friends.getMutual", params=params)
+        document = response.json()
+        if "error" in document or not response.ok:
+            raise APIError(document["error"]["error_msg"])
+        return document["response"]
+
+    responses = []
+    if progress is None:
+        progress = lambda x: x
+    for i in progress(range(((len(target_uids) + 99) // 100))):
+        params = {
+            "access_token": VK_CONFIG["access_token"],
+            "v": VK_CONFIG["version"],
+            "target_uids": ",".join(map(str, target_uids)),
+            "order": order,
+            "count": count if count is not None else "",
+            "offset": offset + i * 100,
+        }
+        response = session.get(f"friends.getMutual", params=params)
+        document = response.json()
+        if "error" in document or not response.ok:
+            raise APIError(document["error"]["error_msg"])
+        for arg in document["response"]:
+            responses.append(
+                MutualFriends(
+                    id=arg["id"],
+                    common_friends=arg["common_friends"],
+                    common_count=arg["common_count"],
+                )
+            )
+        if i % 3 == 2:
+            time.sleep(1)
+    return responses
