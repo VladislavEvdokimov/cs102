@@ -3,57 +3,40 @@ import typing as tp
 
 
 def update_ref(gitdir: pathlib.Path, ref: tp.Union[str, pathlib.Path], new_value: str) -> None:
-    if isinstance(ref, str):
-        ref = pathlib.Path(ref)
-
-    path = gitdir / ref
-    path.touch()
-    path.write_text(new_value)
+    ref_file = gitdir / ref
+    with ref_file.open("w") as s:
+        s.write(new_value)
 
 
 def symbolic_ref(gitdir: pathlib.Path, name: str, ref: str) -> None:
+    # PUT YOUR CODE HERE
     ...
 
 
-def ref_resolve(gitdir: pathlib.Path, refname: str) -> tp.Union[str, None]:
-    if refname == "HEAD":
-        with open(gitdir / refname, "r") as f:
-            content = f.read()
-        refname = content[content.find(" ") + 1 :].strip()
-
-    path = gitdir / refname
-    if path.exists() is False:
-        return None
-    with open(path, "r") as f:
-        content = f.read()
-
-    return content
+def ref_resolve(gitdir: pathlib.Path, refname: str) -> tp.Optional[str]:
+    if refname == "HEAD" and not is_detached(gitdir):
+        return resolve_head(gitdir)
+    if (gitdir / refname).exists():
+        with (gitdir / refname).open() as f:
+            return f.read().strip()
+    return None
 
 
 def resolve_head(gitdir: pathlib.Path) -> tp.Optional[str]:
-    if ref_resolve(gitdir, "HEAD") is None:
-        return None
-    else:
-        return ref_resolve(gitdir, "HEAD")
+    with (gitdir / "HEAD").open() as f:
+        return ref_resolve(gitdir, get_ref(gitdir))
 
 
 def is_detached(gitdir: pathlib.Path) -> bool:
-    path = gitdir / "HEAD"
-
-    with open(path, "r") as f:
-        content = f.read()
-
-    if content.startswith("ref:"):
-        return False
-    else:
+    if get_ref(gitdir) == "":
         return True
+    return False
 
 
 def get_ref(gitdir: pathlib.Path) -> str:
-    with open(gitdir / "HEAD", "r") as f:
-        content = f.read()
-    if is_detached(gitdir):
-        return content
-    else:
-        refname = content[content.find(" ") + 1 :].strip()
-        return refname
+    with (gitdir / "HEAD").open() as f:
+        data = f.read().strip().split()
+        if len(data) == 2:
+            return data[1]
+        else:
+            return ""
