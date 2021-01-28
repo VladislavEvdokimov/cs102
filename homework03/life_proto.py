@@ -80,11 +80,11 @@ class GameOfLife:
         """
         grid = []
         if randomize == False:
-            grid = [[0 for w in range(self.cell_width)] for h in range(self.cell_height)]
+            grid = [[0 for h in range(self.cell_height)] for h in range(self.cell_width)]
         else:
             grid = [
-                [random.randint(0, 1) for w in range(self.cell_width)]
-                for h in range(self.cell_height)
+                [random.randint(0, 1) for h in range(self.cell_height)]
+                for w in range(self.cell_width)
             ]
         return grid
 
