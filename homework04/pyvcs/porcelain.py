@@ -26,7 +26,7 @@ def commit(gitdir: pathlib.Path, message: str, author: tp.Optional[str] = None) 
 def checkout(gitdir: pathlib.Path, obj_name: str) -> None:
     for entry in read_index(gitdir):
         if pathlib.Path(entry.name).exists():
-            os.remove(entry.name)
+            os.remove(entry.name) #test 
     commit_data = commit_parse(read_object(obj_name, gitdir)[1])
     doing = True
     while doing:
