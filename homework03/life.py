@@ -1,7 +1,6 @@
+import copy
 import pathlib
 import random
-import copy
-
 from typing import List, Optional, Tuple
 
 
