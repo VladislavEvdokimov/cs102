@@ -85,8 +85,8 @@ def get_mutual(
                 "order": order,
                 "count": count,
                 "offset": offset,
-                "access_token": config.VK_CONFIG["access_token"],
-                "v": config.VK_CONFIG["version"],
+                "access_token": VK_CONFIG["access_token"],
+                "v": VK_CONFIG["version"],
             },
         ).json()["response"]
 
@@ -104,8 +104,8 @@ def get_mutual(
                 "order": order,
                 "count": count,
                 "offset": offset + m,
-                "access_token": config.VK_CONFIG["access_token"],
-                "v": config.VK_CONFIG["version"],
+                "access_token": VK_CONFIG["access_token"],
+                "v": VK_CONFIG["version"],
             },
         ).json()["response"]
         result.extend(
@@ -117,5 +117,4 @@ def get_mutual(
             for data in response
         )
         time.sleep(0.34)
-
     return result
