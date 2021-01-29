@@ -26,16 +26,16 @@ class GUI(UI):
     def draw_grid(self) -> None:
 
         lenght = self.cell_size - 1
-        for i in range(self.life.rows):
-            for j in range(self.life.cols):
-                if self.life.curr_generation[i][j] == 1:
+        for h in range(self.life.rows):
+            for w in range(self.life.cols):
+                if self.life.curr_generation[h][w] == 1:
                     color = pygame.Color("green")
                 else:
                     color = pygame.Color("white")
                 pygame.draw.rect(
                     self.screen,
                     color,
-                    (i * self.cell_size + 1, j * self.cell_size + 1, lenght, lenght),
+                    (h * self.cell_size + 1, w * self.cell_size + 1, lenght, lenght),
                 )
 
     def run(self) -> None:
@@ -52,7 +52,7 @@ class GUI(UI):
                 if event.type == pygame.QUIT:
                     running = False
                 elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-                    pause = True
+                    pause = not pause
 
             self.draw_lines()
 
@@ -61,7 +61,7 @@ class GUI(UI):
                     if event.type == pygame.QUIT:
                         running = False
                     elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-                        pause = True
+                        pause = not pause
                     elif event.type == pygame.MOUSEBUTTONUP:
                         doc = event.pos
                         row = doc[1] // self.cell_size

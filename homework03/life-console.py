@@ -2,7 +2,7 @@ import curses
 
 from life import GameOfLife
 from ui import UI
-
+import time
 
 class Console(UI):
     def __init__(self, life: GameOfLife) -> None:
@@ -57,6 +57,7 @@ class Console(UI):
         while not self.life.is_max_generations_exceeded and self.life.is_changing:
             self.life.step()
             self.draw_borders(screen)
+            time.sleep(0.5)
         curses.endwin()
 
 
