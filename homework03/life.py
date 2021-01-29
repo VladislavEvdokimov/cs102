@@ -3,7 +3,6 @@ import pathlib
 import random
 from typing import List, Optional, Tuple
 
-
 Cell = Tuple[int, int]
 Cells = List[int]
 Grid = List[Cells]
