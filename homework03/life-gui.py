@@ -34,7 +34,7 @@ class GUI(UI):
                 pygame.draw.rect(
                     self.screen,
                     color,
-                    (h * self.cell_size + 1, w * self.cell_size + 1, lenght, lenght),
+                    (w * self.cell_size + 1, h * self.cell_size + 1, lenght, lenght),
                 )
 
     def run(self) -> None:

@@ -36,7 +36,6 @@ class Console(UI):
 
         self.draw_grid(screen)
         screen.refresh()
-        screen.getch()
 
     def draw_grid(self, screen) -> None:
         """ Отобразить состояние клеток. """
