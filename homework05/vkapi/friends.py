@@ -127,34 +127,3 @@ def get_mutual(
             return r["response"]
         except KeyError:
             raise APIError(r["error"])
-
-    responses = []
-    if progress is None:
-        progress = lambda x: x
-    for i in progress(range(((len(target_uids) + 99) // 100))):
-        params = {
-            "access_token": VK_CONFIG["access_token"],
-            "v": VK_CONFIG["version"],
-            "target_uids": ",".join(map(str, target_uids)),
-            "order": order,
-            "count": count if count is not None else "",
-            "offset": offset + i * 100,
-        }
-        response = session.get(f"friends.getMutual", params=params)
-        if response.ok:
-            doc = response.json()
-        else:
-            raise APIError("HTTPError")
-        if "error" in doc:
-            raise APIError(doc["error"]["error_msg"])
-        for arg in doc["response"]:
-            responses.append(
-                MutualFriends(
-                    id=arg["id"],
-                    common_friends=arg["common_friends"],
-                    common_count=arg["common_count"],
-                )
-            )
-        if i % 3 == 2:
-            time.sleep(1)
-    return responses
