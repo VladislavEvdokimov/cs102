@@ -1,7 +1,6 @@
 from life import GameOfLife
 import pygame
 from pygame.locals import *
-
 from ui import UI
 
 
