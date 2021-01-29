@@ -76,7 +76,7 @@ def get_mutual(
     :param offset: Смещение, необходимое для выборки определенного подмножества общих друзей.
     :param progress: Callback для отображения прогресса.
     """
-        source_uid: tp.Optional[int] = None,
+    source_uid: tp.Optional[int] = None,
     target_uid: tp.Optional[int] = None,
     target_uids: tp.Optional[tp.List[int]] = None,
     order: str = "",
