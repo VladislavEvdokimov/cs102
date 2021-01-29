@@ -76,45 +76,35 @@ def get_mutual(
     :param offset: Смещение, необходимое для выборки определенного подмножества общих друзей.
     :param progress: Callback для отображения прогресса.
     """
-    if target_uid:
-        return session.get(
-            "friends.getMutual",
-            params={
-                "source_uid": source_uid,
-                "target_uid": target_uid,
-                "order": order,
-                "count": count,
-                "offset": offset,
-                "access_token": VK_CONFIG["access_token"],
-                "v": VK_CONFIG["version"],
-            },
-        ).json()["response"]
-
-    result: tp.List[MutualFriends] = []
-    range_ = range(0, len(target_uids), 100)  # type: ignore
-    if progress is not None:
-        range_ = progress(range_)
-
-    for m in range_:
-        response = session.get(
-            "friends.getMutual",
-            params={
-                "source_uid": source_uid,
-                "target_uids": ",".join([str(i) for i in target_uids[m : m + 100]]),  # type: ignore
-                "order": order,
-                "count": count,
-                "offset": offset + m,
-                "access_token": VK_CONFIG["access_token"],
-                "v": VK_CONFIG["version"],
-            },
-        ).json()["response"]
-        result.extend(
-            MutualFriends(
-                id=data["id"],
-                common_friends=data["common_friends"],
-                common_count=data["common_count"],
-            )
-            for data in response
-        )
-        time.sleep(0.34)
-    return result
+    if target_uids:
+        x = []
+        y = int(len(target_uids) / 100) if int(len(target_uids) / 100) else 1
+        for t in progress(range(y)):
+            offset = 100 * t
+            r = session.get(
+                f"friends.getMutual?access_token={VK_CONFIG['access_token']}"
+                f"&source_uid={source_uid if source_uid else ''}"
+                f"&target_uids={','.join(map(str, target_uids)) if target_uids else ''}&order={order if order else ''}"
+                f"&count={count if count else ''}&offset={offset if offset else 0}"
+                f"&v={VK_CONFIG['version']}"
+            ).json()
+            try:
+                data = r["response"]
+            except KeyError:
+                raise APIError(r["error"])
+            x += [MutualFriends(**f) for f in data]  # type: ignore
+            if t % 3 == 2:
+                time.sleep(1)
+        return x
+    else:
+        r = session.get(
+            f"friends.getMutual?access_token={VK_CONFIG['access_token']}"
+            f"&source_uid={source_uid if source_uid else ''}&target_uid={target_uid if target_uid else ''}"
+            f"&order={order if order else ''}"
+            f"&count={count if count else ''}&offset={offset if offset else 0}"
+            f"&v={VK_CONFIG['version']}"
+        ).json()
+        try:
+            return r["response"]
+        except KeyError:
+            raise APIError(r["error"])
