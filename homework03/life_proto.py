@@ -81,11 +81,11 @@ class GameOfLife:
 
         grid = []
         if randomize == False:
-            grid = [[0 for w in range(self.cell_width)] for h in range(self.cell_height)]
+            grid = [[0 for h in range(self.cell_height)] for w in range(self.cell_width)]
         else:
             grid = [
-                [random.randint(0, 1) for w in range(self.cell_width)]
-                for h in range(self.cell_height)
+                [random.randint(0, 1) for h in range(self.cell_height)]
+                for w in range(self.cell_width)
             ]
         return grid
 
@@ -95,9 +95,9 @@ class GameOfLife:
         """
 
         lenght = self.cell_size - 1
-        for i in range(self.cell_height):
-            for j in range(self.cell_width):
-                if self.grid[i][j] == 1:
+        for w in range(self.cell_width):
+            for h in range(self.cell_height):
+                if self.grid[w][h] == 1:
                     color = pygame.Color("green")
                 else:
                     color = pygame.Color("white")
@@ -125,14 +125,14 @@ class GameOfLife:
 
         neighbours = []
         row, col = cell
-        for h in range(-1, 2):
-            for w in range(-1, 2):
+        for w in range(-1, 2):
+            for h in range(-1, 2):
                 if (
-                    0 <= row + h < self.cell_height
-                    and 0 <= col + w < self.cell_width
-                    and (h, w) != (0, 0)
+                    0 <= row + w < self.cell_width
+                    and 0 <= col + h < self.cell_height
+                    and (w, h) != (0, 0)
                 ):
-                    neighbours.append(self.grid[row + h][col + w])
+                    neighbours.append(self.grid[row + w][col + h])
         return neighbours
 
     def get_next_generation(self) -> Grid:
@@ -147,10 +147,10 @@ class GameOfLife:
         copy_grid = self.create_grid(False)
         for h in range(self.cell_height):
             for w in range(self.cell_width):
-                if (self.grid[h][w] == 0) and sum(self.get_neighbours((h, w))) == 3:
-                    copy_grid[h][w] = 1
-                elif (self.grid[h][w] == 1) and (1 < sum(self.get_neighbours((h, w))) < 4):
-                    copy_grid[h][w] = 1
+                if (self.grid[w][h] == 0) and sum(self.get_neighbours((w, h))) == 3:
+                    copy_grid[w][h] = 1
+                elif (self.grid[w][h] == 1) and (1 < sum(self.get_neighbours((w, h))) < 4):
+                    copy_grid[w][h] = 1
 
         return copy_grid
 
