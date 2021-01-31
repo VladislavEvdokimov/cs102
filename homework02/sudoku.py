@@ -1,6 +1,5 @@
-from typing import Tuple, List, Set, Optional
 import random
-
+from typing import Tuple, List, Set, Optional
 
 def read_sudoku(filename: str) -> List[List[str]]:
     """ Прочитать Судоку из указанного файла """
