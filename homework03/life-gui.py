@@ -73,6 +73,8 @@ class GUI(UI):
                         pygame.display.flip()
             else:
 
+                if self.life.check_cycle() is True:
+                    running = False
                 self.life.step()
                 self.draw_grid()
                 pygame.display.flip()

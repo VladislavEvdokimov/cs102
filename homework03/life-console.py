@@ -57,11 +57,13 @@ class Console(UI):
         while not self.life.is_max_generations_exceeded and self.life.is_changing:
             self.life.step()
             self.draw_borders(screen)
-            time.sleep(0.5)
+            time.sleep(0.1)
+            if self.life.check_cycle() is True:
+                break
         curses.endwin()
 
 
 if __name__ == "__main__":
-    life = GameOfLife((24, 80), max_generations=50)
+    life = GameOfLife((15, 15), max_generations=10000)
     gui = Console(life)
     gui.run()

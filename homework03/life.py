@@ -25,6 +25,9 @@ class GameOfLife:
         self.max_generations = max_generations
         # Текущее число поколений
         self.generations = 1
+        # Переменная, необходимая для проверки дейтсивй программы на цикличность
+        # Минимальная сумма элементов поля в данный момент
+        self.min_sum = float("inf")
 
     def create_grid(self, randomize: bool = False) -> Grid:
 
@@ -67,6 +70,53 @@ class GameOfLife:
         self.prev_generation = copy.deepcopy(self.curr_generation)
         self.curr_generation = self.get_next_generation()
         self.generations += 1
+
+    def sum_of_the_elements(self) -> int:
+        """
+        Вычисление суммы элементов curr_generation
+
+        Returns
+        ----------
+        out: int
+            сумма элементов curr_generation
+        """
+
+        sum_elements = 0
+        for k in range(self.rows):
+            for g in range(self.cols):
+                sum_elements += self.curr_generation[k][g]
+        return sum_elements
+
+    def check_cycle(self) -> bool:
+        """
+        Проверка на зацикливание игры.
+
+        Проверка осуществляется наивным, но полностью рабочим методом.
+        Отталкиваемся от того, что чем больше поле, тем больше времени нужно
+        дать программе, чтобы отловить цикличность. Чтобы связать время отлавливания
+        цикличности и размер поля, будем помещать в переменную cnt произведение
+        длины и ширины. Если количество живых клеток не будет меняться количество раз
+        равное cnt, то мы имеем дело с цикличностью
+
+        Returns
+        ----------
+        out: bool
+            True - имее дело с цикличностью
+            False - цикличности нет
+        """
+
+        sum_elements = self.sum_of_the_elements()
+
+        if sum_elements < self.min_sum:
+            self.cnt = self.rows * self.cols
+            self.min_sum = sum_elements
+            return False
+        else:
+            self.cnt -= 1
+            if self.cnt == 0:
+                return True
+            else:
+                return False
 
     @property
     def is_max_generations_exceeded(self) -> bool:
