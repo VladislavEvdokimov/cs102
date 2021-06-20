@@ -7,6 +7,7 @@ from hw06.bayes import NaiveBayesClassifier
 from hw06.database import News, change_label, engine, get_new_news, get_session
 from sqlalchemy.sql.expression import label
 
+
 @tp.no_type_check
 @route("/")
 @route("/news")
