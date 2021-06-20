@@ -13,13 +13,13 @@ import seaborn as sns  # type: ignore
 import io
 import os
 
-import matplotlib.pyplot as plt #type: ignore
+import matplotlib.pyplot as plt  # type: ignore
 
 # %matplotlib inline
-import numpy as np #type: ignore
+import numpy as np  # type: ignore
 
 # Commented out IPython magic to ensure Python compatibility.
-import pandas as pd #type: ignore
+import pandas as pd  # type: ignore
 
 df = pd.read_csv("howpop_train.csv")
 # delimiter=",", names = ["url", "domain", "post_id", "published", "author", "flow", "polling", "content_len", "title", "comments", "favs", "views", "votes_plus", "votes_minus", "views_lognorm", "favs_lognorm", "comments_lognorm"])
