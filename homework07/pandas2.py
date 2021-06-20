@@ -156,4 +156,4 @@ fig = plt.figure(figsize=(20, 20))
 fig.add_subplot(1, 1, 1)
 pl = sns.countplot(y="hour", hue="dayofweek", data=df[df.dayofweek.isin([1, 6])], palette="Set2")
 pl.set_title("Количество публикаций за час", fontweight="bold")
-#kek
+
