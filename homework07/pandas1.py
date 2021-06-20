@@ -34,13 +34,22 @@ Original file is located at
 - salary: >50K,<=50K
 """
 
-# Commented out IPython magic to ensure Python compatibility.
-import pandas as pd
+
 import io
+import os
+
+import matplotlib.pyplot as plt
+
 # %matplotlib inline
 import numpy as np
-import matplotlib.pyplot as plt
-import os
+
+# Commented out IPython magic to ensure Python compatibility.
+import pandas as pd
+
+
+
+
+
 
 df = pd.read_csv("adult.csv", delimiter=",", names = ["age", "workclass", "fnlwgt", "education", "education-num", "marital-status", "occupation", "relationship", "race", "sex", "capital-gain", "capital-loss", "hours-per-week", "native-country", "salary"])
 

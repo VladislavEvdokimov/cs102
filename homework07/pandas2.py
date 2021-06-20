@@ -17,12 +17,12 @@ Original file is located at
 
 **Заполните код в клетках и ответьте на вопросы в [веб-форме](https://docs.google.com/forms/d/1y8qj5iYpaVhczjWnZuHd5NRR_sdCGy3eTF5n-qPKknQ).**
 """
+# %matplotlib inline
+import matplotlib.pyplot as plt
 
 # Commented out IPython magic to ensure Python compatibility.
 import pandas as pd
 
-# %matplotlib inline
-import matplotlib.pyplot as plt
 import seaborn as sns
 
 """## Загрузка и знакомство с данными
