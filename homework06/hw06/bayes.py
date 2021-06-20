@@ -13,7 +13,7 @@ class NaiveBayesClassifier:
         self.a = a
 
     def fit(self, X: tp.List[str], y: tp.List[str]) -> None:
-        """ Fit Naive Bayes classifier according to titles, labels. """
+        """Fit Naive Bayes classifier according to titles, labels."""
 
         for xi, yi in zip(X, y):
             self.classes[yi] += 1
@@ -38,15 +38,15 @@ class NaiveBayesClassifier:
         return log(self.classes[cls]) + sum(self.log_wi_c(cls, w) for w in feature.split())
 
     def predict(self, feature: str) -> str:
-        """ Perform classification for one feature. """
+        """Perform classification for one feature."""
         assert len(self.classes) > 0
         return str(max(self.classes.keys(), key=lambda c: self.class_probability(c, feature)))
 
     def get_predictions(self, X: tp.List[str]) -> tp.List[str]:
-        """ Perform classification on an array of test vectors X. """
+        """Perform classification on an array of test vectors X."""
         return [self.predict(feature) for feature in X]
 
     def score(self, X: tp.List[str], y: tp.List[str]) -> float:
-        """ Returns the mean accuracy on the given test data and labels. """
+        """Returns the mean accuracy on the given test data and labels."""
         predicted = self.get_predictions(X)
         return mean(pred == actual for pred, actual in zip(predicted, y))
