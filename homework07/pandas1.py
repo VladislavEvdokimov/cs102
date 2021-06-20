@@ -80,13 +80,13 @@ print("Средний возраст женщин", df.groupby("sex").age.mean()
 
 """**3. Какова доля граждан Германии (признак *native-country*)?**"""
 
-print("Доля граждан Германиии", df["native-country"].value_counts(['Germany'])[4:5])
+print("Доля граждан Германиии", df["native-country"].value_counts(["Germany"])[4:5])
 
 """**4-5. Каковы средние значения и среднеквадратичные отклонения возраста тех, кто получает более 50K в год (признак *salary*) и тех, кто получает менее 50K в год? **"""
 
 dm = df.groupby("salary")[["age"]].mean()
 ds = df.groupby("salary")[["age"]].std()
-d = pd.concat([dm,ds], axis=1)
+d = pd.concat([dm, ds], axis=1)
 d.columns = ["mean", "std"]
 print(d)
 
@@ -114,12 +114,11 @@ df[(df["sex"] == "Male") & (df["marital-status"].str.startswith("Married"))][
 
 df["marital-status"].value_counts()
 
-wealthy = df[df['salary']== ">50K"]
+wealthy = df[df['salary'] == ">50K"]
 
 wealthy["marital-status"].unique()
 
-df[(df["sex"] == "Male") & df["marital-status"].isin(["Never-married", 
-"Separated", "Divorced"])][
+df[(df["sex"] == "Male") & df["marital-status"].isin(["Never-married", "Separated", "Divorced"])][
     "salary"
 ].value_counts()
 df[(df["sex"] == "Male") & (df["marital-status"].str.startswith("Married"))][
@@ -135,8 +134,7 @@ num_workaholics = df[df["hours-per-week"] == max_load].shape[0]
 print("Total number of such hard workers {0}".format(num_workaholics))
 
 rich_share = (
-    float(df[(df["hours-per-week"] == 99) & (df["salary"] == ">50K")].shape[1]) 
-/ num_workaholics
+    float(df[(df["hours-per-week"] == 99) & (df["salary"] == ">50K")].shape[1]) / num_workaholics
 )
 df[(df["hours-per-week"] == 99) & (df["salary"] == ">50K")].shape[1]
 print("Percentage of rich among them {0}%".format(float(100 * rich_share)))
