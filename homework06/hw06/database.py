@@ -2,7 +2,7 @@ import typing as tp
 
 from hw06.scraputils import get_news
 from sqlalchemy import create_engine  # type:ignore
-from sqlalchemy import Column, String, Integer  # type:ignore
+from sqlalchemy import Column, Integer, String  # type:ignore
 from sqlalchemy.engine.base import Engine  # type:ignore
 from sqlalchemy.ext.declarative import declarative_base  # type:ignore
 from sqlalchemy.orm import sessionmaker  # type:ignore
