@@ -47,25 +47,25 @@ import numpy as np
 import pandas as pd
 
 df = pd.read_csv(
-   "adult.csv", 
-   delimiter=",", 
-   names = [
-         "age", 
-         "workclass", 
-         "fnlwgt", 
-         "education", 
-         "education-num", 
-         "marital-status", 
-         "occupation", 
-         "relationship", 
-         "race", 
-         "sex", 
-         "capital-gain", 
-         "capital-loss", 
-         "hours-per-week", 
-         "native-country", 
-         "salary"
-    ]
+    "adult.csv",
+    delimiter=",",
+    names=[
+        "age",
+        "workclass",
+        "fnlwgt",
+        "education",
+        "education-num",
+        "marital-status",
+        "occupation",
+        "relationship",
+        "race",
+        "sex",
+        "capital-gain",
+        "capital-loss",
+        "hours-per-week",
+        "native-country",
+        "salary",
+    ],
 )
 
 df.head()
@@ -114,7 +114,7 @@ df[(df["sex"] == "Male") & (df["marital-status"].str.startswith("Married"))][
 
 df["marital-status"].value_counts()
 
-wealthy = df[df['salary'] == ">50K"]
+wealthy = df[df["salary"] == ">50K"]
 
 wealthy["marital-status"].unique()
 

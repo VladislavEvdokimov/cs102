@@ -42,7 +42,7 @@ print(tabulate(fetch_all(curs), "keys", "psql"))
 
 # 3. Какова доля граждан Германии (признак native-country)?
 
-curs.execute( 
+curs.execute(
     """
     SELECT native_country, ROUND((COUNT(*) / (SELECT COUNT(*) FROM adult_data)::numeric), 6)
         FROM adult_data WHERE native_country = 'Germany'
