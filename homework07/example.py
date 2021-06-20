@@ -95,15 +95,17 @@ curs.execute(
 print("Age statistics:")
 print(tabulate(fetch_all(curs), "keys", "psql"))
 
-curs.execute("""
+curs.execute(
+    """
     SELECT MAX(age)
     FROM adult_data WHERE sex = 'Male' AND race = 'Amer-Indian-Eskimo'
     GROUP BY race
-""")
+"""
+)
 print("Max age of male Amer-Indian-Eskimo:")
 print(tabulate(fetch_all(curs), "keys", "psql"))
 
-#8. Среди кого больше доля зарабатывающих много (>50K): среди женатых или холостых мужчин (признак marital-status)? Женатыми считаем тех, у кого marital-status начинается с Married (Married-civ-spouse, Married-spouse-absent или Married-AF-spouse), остальных считаем холостыми.
+# 8. Среди кого больше доля зарабатывающих много (>50K): среди женатых или холостых мужчин (признак marital-status)? Женатыми считаем тех, у кого marital-status начинается с Married (Married-civ-spouse, Married-spouse-absent или Married-AF-spouse), остальных считаем холостыми.
 
 curs.execute(
     """
@@ -111,7 +113,7 @@ curs.execute(
     FROM adult_data WHERE salary = '>50K'
     GROUP BY marital_status, salary
             """
-    )
+)
 print("Impact of marital status:")
 print(tabulate(fetch_all(curs), "keys", "psql"))
 
@@ -151,7 +153,7 @@ curs.execute(
 )
 
 all = fetch_all(curs)[0]["count"]
-print("Percentage of rich and hard-working:", round(high_salary / all * 100), '%')
+print("Percentage of rich and hard-working:", round(high_salary / all * 100), "%")
 
 # 10. Посчитайте среднее время работы (hours-per-week) зарабатывающих мало и много (salary) для каждой страны (native-country).
 
@@ -161,7 +163,7 @@ curs.execute(
     FROM adult_data
     GROUP BY native_country, salary
     """
-    )
+)
 
 # Среднее время работы для зарабатывающих мало и много в каждой стране
 print("Average hours-per-week for every country:")

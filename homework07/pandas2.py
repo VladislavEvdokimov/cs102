@@ -40,9 +40,8 @@ import numpy as np
 # Commented out IPython magic to ensure Python compatibility.
 import pandas as pd
 
-df = pd.read_csv(
-    "howpop_train.csv") 
-   #delimiter=",", names = ["url", "domain", "post_id", "published", "author", "flow", "polling", "content_len", "title", "comments", "favs", "views", "votes_plus", "votes_minus", "views_lognorm", "favs_lognorm", "comments_lognorm"])
+df = pd.read_csv("howpop_train.csv") 
+#delimiter=",", names = ["url", "domain", "post_id", "published", "author", "flow", "polling", "content_len", "title", "comments", "favs", "views", "votes_plus", "votes_minus", "views_lognorm", "favs_lognorm", "comments_lognorm"])
 
 df.shape
 
@@ -50,11 +49,8 @@ df.head(3).T
 
 """Избавимся сразу от переменных, названия которых заканчиваются на `_lognorm` (нужны для соревнования на Kaggle). Выберем их с помощью `filter()` и удалим `drop`-ом:"""
 
-df.drop(
-    filter(lambda c: c.endswith("_lognorm"), df.columns),
-    axis=1,  # axis = 1: столбцы
-    inplace=True,
-)  # избавляет от необходимости сохранять датасет
+df.drop(filter(lambda c: c.endswith("_lognorm"), df.columns),axis=1, inplace=True)
+# избавляет от необходимости сохранять датасет
 
 df.describe().T
 
@@ -106,12 +102,12 @@ df.drop(filter(lambda c: c.endswith('_lognorm'), df.columns),axis = 1,inplace = 
 
 sns.set_style("white")
 sns.set_palette("RdBu")
-sns.set_context("notebook", font_scale = 0.75,rc = {"figure.figsize" : (30, 15), "axes.titlesize" : 12 })
+sns.set_context("notebook", font_scale = 0.75,rc={"figure.figsize" : (30, 15), "axes.titlesize" : 12 })
 
 march_or_april = pd.DataFrame(
     {"2015": [march_2015, april_2015], "2016": [march_2016, april_2016]}, index=["March", "April"]
     )
-march_or_april.plot.bar(color=["deepskyblue", "dimgrey"],rot=0);
+march_or_april.plot.bar(color=["deepskyblue", "dimgrey"], rot=0);
 
 """## 2\. Проанализируйте публикации в месяце из предыдущего вопроса
 
@@ -128,7 +124,7 @@ df["dates"] = [str(p)[:7] for p in df.published]
 list = df.dates.value_counts().index[0]
 df_popmonth = df[df.dates == list]
 df_popmonth["day"] = [p.day for p in df_popmonth.published]
-sns.countplot(x = "day", data = df_popmonth)
+sns.countplot(x = "day", data=df_popmonth)
 
 """## 3\. Когда лучше всего публиковать статью?
 
@@ -143,7 +139,12 @@ print(df.groupby("hour")["views"].mean().sort_values(ascending=False)[:5])
 
 print(df.groupby("hour")["comments"].mean().sort_values(ascending=False)[:5])
 
-print(df[df.domain == "habrahabr.ru"].groupby('hour')['comments'].mean().sort_values(ascending=False)[:5])
+print(
+    df[df.domain == "habrahabr.ru"]
+    .groupby('hour')['comments']
+    .mean()
+    .sort_values(ascending=False)[:5]
+)
 
 df[df.domain == "habrahabr.ru"].groupby("hour")[["comments"]].mean().plot()
 
@@ -158,13 +159,13 @@ df[df.domain == "habrahabr.ru"].groupby("hour")[["comments"]].mean().plot()
 df[df.author.isin(["@Mordatyj","@Mithgol", "@alizar", 
 "@ilya42"])].groupby('author')[
     ['votes_minus']
-].mean().sort_values('votes_minus', ascending = False)
+].mean().sort_values('votes_minus', ascending=False)
 
 who = pd.DataFrame(
     {"votes_minus": [20.481081, 7.928191, 7.471455, 6.216797]}, 
     index=["@Mithgol", "@alizar", "@Mordatyj", "@ilya42"]
     )
-who.plot.bar(color=["deepskyblue", "dimgrey", "mediumspringgreen", "orange"],rot=0);
+who.plot.bar(color=["deepskyblue", "dimgrey", "mediumspringgreen", "orange"] ,rot=0);
 
 """## 5\. Сравните субботы и понедельники
 
@@ -173,5 +174,5 @@ who.plot.bar(color=["deepskyblue", "dimgrey", "mediumspringgreen", "orange"],rot
 
 fig = plt.figure(figsize=(20, 20))
 fig.add_subplot(1, 1, 1)
-pl = sns.countplot(y = "hour", hue = "dayofweek", data = df[df.dayofweek.isin([1, 6])], palette="Set2")
-pl.set_title("Количество публикаций за час", fontweight = "bold")
+pl = sns.countplot(y ="hour", hue ="dayofweek", data = df[df.dayofweek.isin([1, 6])], palette="Set2")
+pl.set_title("Количество публикаций за час", fontweight="bold")
