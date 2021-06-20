@@ -1,13 +1,11 @@
 import typing as tp
 
 from hw06.scraputils import get_news
-from sqlalchemy import create_engine
-from sqlalchemy import Column, String, Integer
+from sqlalchemy import Column, Integer, String, create_engine
 from sqlalchemy.engine.base import Engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
-
 
 Base = declarative_base()
 path_news_db = "sqlite:///news.db"
