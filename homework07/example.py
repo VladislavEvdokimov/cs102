@@ -1,8 +1,8 @@
 from pprint import pprint as pp
 
-import psycopg2 # type: ignore
-import psycopg2.extras # type: ignore
-from tabulate import tabulate # type: ignore
+import psycopg2  # type: ignore
+import psycopg2.extras  # type: ignore
+from tabulate import tabulate  # type: ignore
 
 c = psycopg2.connect("host=localhost port=5432 dbname=odscourse user=postgres password=secret")
 curs = c.cursor()

@@ -1,9 +1,9 @@
 # %matplotlib inline
-import matplotlib.pyplot as plt # type: ignore
+import matplotlib.pyplot as plt  # type: ignore
 
 # Commented out IPython magic to ensure Python compatibility.
-import pandas as pd # type: ignore
-import seaborn as sns # type: ignore
+import pandas as pd  # type: ignore
+import seaborn as sns  # type: ignore
 
 """## Загрузка и знакомство с данными
 
