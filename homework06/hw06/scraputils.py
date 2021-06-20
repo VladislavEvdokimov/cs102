@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup  # type:ignore
 def extract_news(
     parser: BeautifulSoup, url: str = "https://news.ycombinator.com/"
 ) -> tp.List[tp.Dict[str, tp.Union[int, str]]]:
-    """ Extract news from a given web page """
+    """Extract news from a given web page"""
 
     news_list = []
     title_list = []
@@ -56,13 +56,13 @@ def extract_news(
 
 
 def extract_next_page(parser: BeautifulSoup) -> str:
-    """ Extract next page URL """
+    """Extract next page URL"""
     link = parser.select(".morelink")[0]["href"]
     return str(link)
 
 
 def get_news(url: str, n_pages: int = 1) -> tp.List[tp.Dict[str, tp.Union[int, str]]]:
-    """ Collect news from a given web page """
+    """Collect news from a given web page"""
     news = []
     while n_pages:
         print("Collecting data from page: {}".format(url))
