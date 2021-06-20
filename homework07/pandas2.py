@@ -22,7 +22,6 @@ import matplotlib.pyplot as plt
 
 # Commented out IPython magic to ensure Python compatibility.
 import pandas as pd
-
 import seaborn as sns
 
 """## Загрузка и знакомство с данными
@@ -30,13 +29,16 @@ import seaborn as sns
 Для работы вам понадобятся предобработанные данные нашего учебного конкурса на kaggle [«Прогноз популярности статьи на Хабре»](https://www.kaggle.com/c/howpop-habrahabr-favs). Скачайте [данные](https://drive.google.com/file/d/1nV2qV9otN3LnVSDqy95hvpJdb6aWtATk/view?usp=sharing) соревнования (данные были удалены с Kaggle ради организации последующего идентичного соревнования, так что тут ссылка на Google Drive).
 """
 
-# Commented out IPython magic to ensure Python compatibility.
-import pandas as pd
 import io
+import os
+
+import matplotlib.pyplot as plt
+
 # %matplotlib inline
 import numpy as np
-import matplotlib.pyplot as plt
-import os
+
+# Commented out IPython magic to ensure Python compatibility.
+import pandas as pd
 
 df = pd.read_csv("howpop_train.csv") #delimiter=",", names = ["url", "domain", "post_id", "published", "author", "flow", "polling", "content_len", "title", "comments", "favs", "views", "votes_plus", "votes_minus", "views_lognorm", "favs_lognorm", "comments_lognorm"])
 

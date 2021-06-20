@@ -46,11 +46,6 @@ import numpy as np
 # Commented out IPython magic to ensure Python compatibility.
 import pandas as pd
 
-
-
-
-
-
 df = pd.read_csv("adult.csv", delimiter=",", names = ["age", "workclass", "fnlwgt", "education", "education-num", "marital-status", "occupation", "relationship", "race", "sex", "capital-gain", "capital-loss", "hours-per-week", "native-country", "salary"])
 
 df.head()
