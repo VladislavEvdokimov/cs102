@@ -1,12 +1,15 @@
 import io
 import os
 
+
 import matplotlib.pyplot as plt #type: ignore
 
 # %matplotlib inline
+
 import numpy as np #type: ignore
 
 # Commented out IPython magic to ensure Python compatibility.
+
 import pandas as pd #type: ignore
 
 df = pd.read_csv(
